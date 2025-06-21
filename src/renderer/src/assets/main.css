@@ -1,0 +1,60 @@
+@font-face {
+  font-family: 'Nunito Sans';
+  src: url('./NunitoSans-Variable.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Nunito Sans';
+  src: url('./NunitoSans-Italic.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  border-radius: 16px;
+  overflow: hidden;
+  height: 100vh;
+  background-color: transparent !important;
+  margin: 0;
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+.d2msg {
+  background: rgba(30, 30, 30, 0.9);
+  width: 100vw;
+  height: 100vh;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+}
+
+.test {
+  background: rgba(10, 10, 10, 0.3);
+  position: absolute;
+  width: 230px;
+  height: 100%;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
