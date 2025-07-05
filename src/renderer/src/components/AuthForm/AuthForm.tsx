@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Button, Input, Form } from '@heroui/react'
 import { useTranslation } from 'react-i18next'
 
-const AuthForm: React.FC = () => {
+const AuthForm = (): React.ReactElement => {
   const [action, setAction] = useState('')
 
   return (

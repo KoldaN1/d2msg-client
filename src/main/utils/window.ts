@@ -2,7 +2,7 @@ import { BrowserWindow, shell } from 'electron'
 import { join } from 'path'
 import { is } from '@electron-toolkit/utils'
 import { applyWin32TransparentFix } from './winFix'
-import { handleWindowControls } from './ipc'
+import { handleWindowControls } from '../ipc'
 
 let mainWindow: BrowserWindow | null = null
 
@@ -25,7 +25,7 @@ export const setupWindow = (): void => {
     }
   })
 
-  handleWindowControls(mainWindow) // Handle window controls
+  handleWindowControls(mainWindow)
 
   if (process.platform === 'win32') {
     // Fix for frameless+transparent window on Windows

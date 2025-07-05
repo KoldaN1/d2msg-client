@@ -1,0 +1,12 @@
+{
+  "language": "日本語",
+  "languageCode": "ja",
+  "countryCode": "JP",
+  "welcome": "ようこそ",
+  "login": "ログイン",
+  "error": "予期しないエラーが発生しました: {{error}}",
+  "languageWord": "言語",
+  "selectYourLanguage": "言語を選択してください",
+  "selectLanguage": "言語を選択",
+  "selected": "選択済み"
+}

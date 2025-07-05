@@ -3,5 +3,10 @@
   "languageCode": "en",
   "countryCode": "US",
   "welcome": "Welcome!",
-  "login": "Log In"
+  "login": "Log In",
+  "error": "An unexpected error occurred: {{error}}",
+  "languageWord": "Language",
+  "selectYourLanguage": "Select your language",
+  "selectLanguage": "Select language",
+  "selected": "Selected"
 }

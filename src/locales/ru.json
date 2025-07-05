@@ -3,5 +3,10 @@
   "languageCode": "ru",
   "countryCode": "RU",
   "welcome": "Добро пожаловать!",
-  "login": "Авторизация"
+  "login": "Авторизация",
+  "error": "Произошла неожиданная ошибка: {{error}}",
+  "languageWord": "Язык",
+  "selectYourLanguage": "Выберите Ваш язык",
+  "selectLanguage": "Выберите язык",
+  "selected": "Выбрано"
 }

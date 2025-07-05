@@ -1,23 +1,19 @@
 import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
+import { Config } from '../types/config'
 
 const api = {
   windowMaximize: () => ipcRenderer.send('windowMaximize'),
   windowMinimize: () => ipcRenderer.send('windowMinimize'),
   windowClose: () => ipcRenderer.send('windowClose'),
-  getConfig: () => ipcRenderer.invoke('getConfig'),
-  setLanguage: (lang: string) => ipcRenderer.invoke('setLanguage', lang)
+  loadConfig: () => ipcRenderer.invoke('loadConfig'),
+  saveConfigValue: (key: keyof Config, value: Config[keyof Config]) =>
+    ipcRenderer.invoke('saveConfigValue', key, value)
 }
 
-if (process.contextIsolated) {
-  try {
-    contextBridge.exposeInMainWorld('electron', electronAPI)
-    contextBridge.exposeInMainWorld('api', api)
-  } catch (error) {
-    console.error(error)
-  }
-} else {
-  window.electron = electronAPI
-  // @ts-ignore (define in dts)
-  window.api = api
+try {
+  contextBridge.exposeInMainWorld('electron', electronAPI)
+  contextBridge.exposeInMainWorld('api', api)
+} catch (error) {
+  console.error(error)
 }

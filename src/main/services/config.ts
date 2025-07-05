@@ -1,27 +1,39 @@
 import { app } from 'electron'
-import { join } from 'path'
-import { existsSync, readFileSync, writeFileSync } from 'fs'
+import { Conf } from 'electron-conf/main'
 import { Config } from '../../types/config'
 
-const configPath: string = join(app.getPath('userData'), 'config.json')
+const DEFAULT_LANGUAGE = 'en'
+const DEFAULT_THEME = 'dark'
 
-export const getSystemLocale = (): string => app.getLocale()
+const schema = {
+  type: 'object',
+  properties: {
+    language: { type: 'string' },
+    userSelectLanguage: { type: 'boolean' },
+    accessToken: { type: 'string' },
+    refreshToken: { type: 'string' }
+  },
+  additionalProperties: false
+} as const
 
-export const loadConfig = (): Config => {
-  if (!existsSync(configPath)) {
-    const defaultConfig = {
-      language: getSystemLocale()
-    }
-    writeFileSync(configPath, JSON.stringify(defaultConfig))
+// @ts-ignore skip "required" field
+const store = new Conf<Config>({ schema })
 
-    return defaultConfig
-  } else {
-    const json = readFileSync(configPath, 'utf-8')
+const initConfig = (): void => {
+  if (!store.get('language')) {
+    store.set('language', app.getLocale() || DEFAULT_LANGUAGE)
+  }
 
-    return JSON.parse(json)
+  if (!store.get('userSelectLanguage')) {
+    store.set('userSelectLanguage', false)
   }
 }
 
-export const saveConfig = (config: Config): void => {
-  writeFileSync(configPath, JSON.stringify(config))
+export const loadConfig = (): Config => {
+  initConfig()
+  return store.store
+}
+
+export const saveConfigValue = (key: keyof Config, value: Config[keyof Config]): void => {
+  store.set(key, value)
 }

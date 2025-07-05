@@ -8,9 +8,9 @@ declare global {
       windowMaximize: () => void
       windowMinimize: () => void
       windowClose: () => void
-      getConfig: () => Promise<Config>
-      getLanguage: () => string
+      loadConfig: () => Promise<Config>
       setLanguage: (lang: string) => Promise<void>
+      saveConfigValue: (key: keyof Config, value: Config[keyof Config]) => Promise<void>
     }
 
     electron: typeof import('@electron-toolkit/preload').electronAPI

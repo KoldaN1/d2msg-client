@@ -1,6 +1,6 @@
 import styles from './TitleBar.module.css'
 
-const TitleBar: React.FC = () => {
+const TitleBar = (): React.ReactElement => {
   const close: React.MouseEventHandler = () => window.api.windowClose()
   const minimize: React.MouseEventHandler = () => window.api.windowMinimize()
   const maximize: React.MouseEventHandler = () => window.api.windowMaximize()

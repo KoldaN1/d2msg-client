@@ -1,12 +1,6 @@
 import { ipcMain, BrowserWindow } from 'electron'
-import { getLanguage, setLanguage } from './services/i18n'
-import { loadConfig } from './services/config'
-
-export const handleSystemControls = (): void => {
-  ipcMain.handle('getConfig', () => loadConfig())
-  ipcMain.handle('setLanguage', (_, lang: string) => setLanguage(lang))
-  ipcMain.on('getLanguage', () => getLanguage())
-}
+import { loadConfig, saveConfigValue } from './services/config'
+import { Config } from '../types/config'
 
 export const handleWindowControls = (window: BrowserWindow): void => {
   ipcMain.on('windowMinimize', () => window.minimize())
@@ -14,4 +8,11 @@ export const handleWindowControls = (window: BrowserWindow): void => {
     window.isMaximized() ? window.unmaximize() : window.maximize()
   )
   ipcMain.on('windowClose', () => window.close())
+}
+
+export const handleIpc = (): void => {
+  ipcMain.handle('loadConfig', () => loadConfig())
+  ipcMain.handle('saveConfigValue', (_, key: keyof Config, value: Config[keyof Config]) =>
+    saveConfigValue(key, value)
+  )
 }

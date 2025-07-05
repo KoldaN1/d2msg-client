@@ -1,14 +1,12 @@
 import { app } from 'electron'
 import { electronApp, optimizer } from '@electron-toolkit/utils'
-import { setupWindow } from './window'
-import { setupLifecycleHooks } from './lifecycle'
-import { initI18n } from './services/i18n'
+import { setupWindow } from './utils/window'
+import { setupLifecycleHooks } from './utils/lifecycle'
 import { loadConfig } from './services/config'
-import { handleSystemControls } from './ipc'
+import { handleIpc } from './ipc'
 
 app.whenReady().then(async () => {
-  const config = loadConfig()
-  await initI18n(config.language)
+  loadConfig()
 
   electronApp.setAppUserModelId('com.electron')
 
@@ -17,6 +15,6 @@ app.whenReady().then(async () => {
   })
 
   setupWindow()
-  handleSystemControls()
+  handleIpc()
   setupLifecycleHooks()
 })
