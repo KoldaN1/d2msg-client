@@ -20,7 +20,10 @@ const MainApp: React.FC = () => {
         setConfig(savedConfig)
         await initI18n(savedConfig.language)
 
-        // navigate('/switch-language')
+        if (savedConfig.theme === 'dark') {
+          document.documentElement.classList.add('dark')
+        }
+
         if (!savedConfig.userSelectLanguage) {
           navigate('/switch-language')
         }
@@ -45,12 +48,8 @@ const MainApp: React.FC = () => {
   return (
     <Routes>
       <Route path="/switch-language" element={<SwitchLanguage />} />
-      {/* <Route path="/auth" element={<div />} /> */}
     </Routes>
   )
 }
 
 export default MainApp
-
-/* <div className="test" /> */
-/* <AuthForm /> */

@@ -18,6 +18,40 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --background: rgba(255, 255, 255, 0.9);
+  --foreground: rgba(255, 255, 255, 0.9);
+
+  --border-window: rgba(0, 0, 0, 0.11);
+
+  --accent: #608cd3;
+  --accent-foreground: #477acc;
+
+  --font: #1f2937;
+  --font-secondary: #374151;
+
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+}
+
+html.dark {
+  --background: rgba(29, 29, 31, 0.9);
+  --foreground: rgba(45, 45, 48, 0.9);
+
+  --border-window: rgba(255, 255, 255, 0.08);
+
+  --accent: #628aca;
+  --accent-foreground: #4e77b8;
+
+  --font: #f3f4f6;
+  --font-secondary: #a3a3a3;
+
+  --success: #34d399;
+  --warning: #fbbf24;
+  --error: #f87171;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -39,22 +73,13 @@ body,
 }
 
 .d2msg {
-  background: rgba(30, 30, 30, 0.9);
+  background: var(--background);
   width: 100vw;
   height: 100vh;
   border-radius: 16px;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-window);
   position: relative;
-}
-
-.test {
-  background: rgba(10, 10, 10, 0.3);
-  position: absolute;
-  width: 230px;
-  height: 100%;
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
 }

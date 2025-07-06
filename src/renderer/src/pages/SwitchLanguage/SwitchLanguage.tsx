@@ -4,8 +4,10 @@ import { Select, SelectItem } from '@heroui/react'
 import Flag from 'react-world-flags'
 import styles from './SwitchLanguage.module.css'
 import { FaArrowRight } from 'react-icons/fa'
+import ThemeSwitch from '../../components/ThemeSwitch/ThemeSwitch'
 
 const LANGUAGES = [
+  //TODO fix that
   { key: 'en', label: 'English', countryCode: 'US' },
   { key: 'ru', label: 'Русский', countryCode: 'RU' },
   { key: 'fr', label: 'Français', countryCode: 'FR' },
@@ -39,14 +41,20 @@ const SwitchLanguage = (): React.ReactElement => {
           className={styles.select}
           label={t('languageWord')}
           items={LANGUAGES}
-          selectedKeys={selectedLangCode ? new Set([selectedLangCode]) : new Set()}
+          selectedKeys={selectedLangCode ? [selectedLangCode] : []}
           placeholder={t('selectLanguage')}
           onSelectionChange={(keys) => handleChange(Array.from(keys)[0] as string)}
+          popoverProps={{
+            className: styles.selectPopover
+          }}
         >
           {(lang) => (
             <SelectItem key={lang.key} textValue={lang.label}>
               <div className={styles.selectItem}>
-                <Flag code={lang.countryCode} style={{ width: 20, height: 15, borderRadius: 3 }} />
+                <Flag
+                  code={lang.countryCode}
+                  style={{ width: 20, height: 15, borderRadius: 3, pointerEvents: 'none' }}
+                />
                 <span>{lang.label}</span>
               </div>
             </SelectItem>
@@ -57,7 +65,7 @@ const SwitchLanguage = (): React.ReactElement => {
           {t('selected')}:
           <span className={styles.selectedLang}>
             <Flag
-              style={{ width: 20, height: 15, borderRadius: 3 }}
+              style={{ width: 20, height: 15, borderRadius: 3, pointerEvents: 'none' }}
               code={selectedLang?.countryCode}
             />
             {selectedLang?.label || '-'}
@@ -70,6 +78,8 @@ const SwitchLanguage = (): React.ReactElement => {
           <FaArrowRight size={20} />
         </button>
       )}
+
+      <ThemeSwitch isFloating />
     </div>
   )
 }

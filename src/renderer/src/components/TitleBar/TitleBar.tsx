@@ -7,9 +7,9 @@ const TitleBar = (): React.ReactElement => {
   return (
     <div className={styles.titleBar}>
       <div className={styles.titleBarControls}>
-        <button className={styles.close} onClick={close} />
         <button className={styles.minimize} onClick={minimize} />
         <button className={styles.maximize} onClick={maximize} />
+        <button className={styles.close} onClick={close} />
       </div>
     </div>
   )

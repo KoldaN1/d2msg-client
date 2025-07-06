@@ -4,11 +4,13 @@ import { Config } from '../../types/config'
 
 const DEFAULT_LANGUAGE = 'en'
 const DEFAULT_THEME = 'dark'
+const DEFAULT_USER_SELECT_LANGUAGE = false
 
 const schema = {
   type: 'object',
   properties: {
     language: { type: 'string' },
+    theme: { type: 'string' },
     userSelectLanguage: { type: 'boolean' },
     accessToken: { type: 'string' },
     refreshToken: { type: 'string' }
@@ -19,18 +21,22 @@ const schema = {
 // @ts-ignore skip "required" field
 const store = new Conf<Config>({ schema })
 
-const initConfig = (): void => {
+const tryInitConfig = (): void => {
   if (!store.get('language')) {
     store.set('language', app.getLocale() || DEFAULT_LANGUAGE)
   }
 
+  if (!store.get('theme')) {
+    store.set('theme', DEFAULT_THEME)
+  }
+
   if (!store.get('userSelectLanguage')) {
-    store.set('userSelectLanguage', false)
+    store.set('userSelectLanguage', DEFAULT_USER_SELECT_LANGUAGE)
   }
 }
 
 export const loadConfig = (): Config => {
-  initConfig()
+  tryInitConfig()
   return store.store
 }
 

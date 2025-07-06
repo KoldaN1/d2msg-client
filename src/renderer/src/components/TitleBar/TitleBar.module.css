@@ -13,17 +13,17 @@
 .titleBarControls {
   display: flex;
   gap: 10px;
+  margin-left: auto;
 }
 
 .close,
 .minimize,
 .maximize {
-  background: #fff;
   width: 11px;
   height: 11px;
   border-radius: 50%;
   border: none;
-  -webkit-app-region: no-drag; /* кнопки не перетягивают */
+  -webkit-app-region: no-drag;
   cursor: pointer;
   transition: filter 0.2s;
 
