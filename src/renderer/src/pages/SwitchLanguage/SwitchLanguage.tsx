@@ -3,58 +3,80 @@ import { useTranslation } from 'react-i18next'
 import { Select, SelectItem } from '@heroui/react'
 import Flag from 'react-world-flags'
 import styles from './SwitchLanguage.module.css'
-import { FaArrowRight } from 'react-icons/fa'
 import ThemeSwitch from '../../components/ThemeSwitch/ThemeSwitch'
-
-const LANGUAGES = [
-  //TODO fix that
-  { key: 'en', label: 'English', countryCode: 'US' },
-  { key: 'ru', label: 'Русский', countryCode: 'RU' },
-  { key: 'fr', label: 'Français', countryCode: 'FR' },
-  { key: 'de', label: 'Deutsch', countryCode: 'DE' },
-  { key: 'ja', label: '日本語', countryCode: 'JP' },
-  { key: 'zh', label: '中文', countryCode: 'CN' }
-]
+import useSystemStore from '../../stores/system'
+import LoadPage from '../LoadPage/LoadPage'
+import { useNavigate } from 'react-router-dom'
+import ActionButton from '../../components/ActionButton/ActionButton'
+import { motion } from 'framer-motion'
 
 const SwitchLanguage = (): React.ReactElement => {
   const { i18n, t } = useTranslation()
   const [selectedLangCode, setSelectedLangCode] = useState<string | null>(null)
+  const { languages } = useSystemStore()
+  const [isLoading, setIsLoading] = useState(false)
+  const navigate = useNavigate()
 
-  const handleChange = async (langCode: string): Promise<void> => {
-    const lang = LANGUAGES.find((l) => l.key === langCode)
-    if (!lang) return
-
-    await i18n.changeLanguage(langCode)
-    await window.api.saveConfigValue('language', langCode)
-    await window.api.saveConfigValue('userSelectLanguage', true)
-    setSelectedLangCode(langCode)
+  if (!languages) {
+    return <LoadPage />
   }
 
-  const selectedLang = LANGUAGES.find((l) => l.key === selectedLangCode)
+  const handleChange = async (langCode: string): Promise<void> => {
+    try {
+      const lang = languages.find((l) => l.key === langCode)
+      if (!lang) return
+
+      await i18n.changeLanguage(langCode)
+      await window.api.saveConfigValue('language', langCode)
+      await window.api.saveConfigValue('userSelectLanguage', true)
+      setSelectedLangCode(langCode)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const selectedLang = languages.find((l) => l.key === selectedLangCode)
+
+  const handleNextButton = (): void => {
+    setIsLoading(true)
+    try {
+      navigate('/registration')
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.content}>
+    <motion.div
+      className={styles.wrapper}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: 'easeOut' }}
+    >
+      <motion.div
+        className={styles.content}
+        initial={{ scale: 0.97 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 0.4, ease: 'easeOut' }}
+      >
         <h1 className={styles.title}>{t('selectYourLanguage')}</h1>
 
         <Select
-          className={styles.select}
           label={t('languageWord')}
-          items={LANGUAGES}
+          items={languages}
+          isDisabled={isLoading}
           selectedKeys={selectedLangCode ? [selectedLangCode] : []}
           placeholder={t('selectLanguage')}
           onSelectionChange={(keys) => handleChange(Array.from(keys)[0] as string)}
-          popoverProps={{
-            className: styles.selectPopover
-          }}
+          popoverProps={{ className: styles.selectPopover }}
+          classNames={{ trigger: styles.trigger }}
         >
           {(lang) => (
             <SelectItem key={lang.key} textValue={lang.label}>
               <div className={styles.selectItem}>
-                <Flag
-                  code={lang.countryCode}
-                  style={{ width: 20, height: 15, borderRadius: 3, pointerEvents: 'none' }}
-                />
+                <Flag code={lang.countryCode} className={styles.flag} />
                 <span>{lang.label}</span>
               </div>
             </SelectItem>
@@ -64,23 +86,18 @@ const SwitchLanguage = (): React.ReactElement => {
         <div className={styles.selected}>
           {t('selected')}:
           <span className={styles.selectedLang}>
-            <Flag
-              style={{ width: 20, height: 15, borderRadius: 3, pointerEvents: 'none' }}
-              code={selectedLang?.countryCode}
-            />
+            <Flag code={selectedLang?.countryCode} className={styles.flag} />
             {selectedLang?.label || '-'}
           </span>
         </div>
-      </div>
+      </motion.div>
 
       {selectedLang && (
-        <button className={styles.nextButton} onClick={() => {}}>
-          <FaArrowRight size={20} />
-        </button>
+        <ActionButton onClick={handleNextButton} disabled={isLoading} loading={isLoading} />
       )}
 
       <ThemeSwitch isFloating />
-    </div>
+    </motion.div>
   )
 }
 

@@ -26,7 +26,7 @@ const ThemeSwitch = ({ isFloating }: ThemeSwitchProps): React.ReactElement => {
   }, [isSelected])
 
   return (
-    <div className={`${isFloating ? styles.switcher : ''}`}>
+    <div className={`${isFloating ? styles.switcherFloating : ''}`}>
       <Component {...getBaseProps()}>
         <VisuallyHidden>
           <input {...getInputProps()} />

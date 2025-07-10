@@ -8,5 +8,17 @@
   "languageWord": "Язык",
   "selectYourLanguage": "Выберите Ваш язык",
   "selectLanguage": "Выберите язык",
-  "selected": "Выбрано"
+  "selected": "Выбрано",
+  "registerTitle": "Регистрация",
+  "usernamePlaceholder": "Имя пользователя",
+  "emailPlaceholder": "Электронная почта",
+  "passwordPlaceholder": "Пароль",
+  "repeatPasswordPlaceholder": "Повторите пароль",
+  "passwordsDontMatch": "Пароли не совпадают",
+  "alreadyHaveAccount": "Уже есть аккаунт?",
+  "invalidEmail": "Неверная электронная почта",
+  "passwordMinLength": "Пароль должен содержать не менее 8 символов",
+  "register": "Зарегистрироваться",
+  "passwordUppercase": "Пароль должен содержать хотя бы одну заглавную букву",
+  "passwordSymbol": "Пароль должен содержать хотя бы один специальный символ"
 }

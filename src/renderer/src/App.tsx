@@ -6,6 +6,7 @@ import { initI18n } from './i18n'
 import LoadPage from './pages/LoadPage/LoadPage'
 import ErrorPage from './pages/ErrorPage/ErrorPage'
 import SwitchLanguage from './pages/SwitchLanguage/SwitchLanguage'
+import Registration from './pages/Registration/Registration'
 
 const MainApp: React.FC = () => {
   const [isLoading, setLoading] = useState(true)
@@ -27,6 +28,8 @@ const MainApp: React.FC = () => {
         if (!savedConfig.userSelectLanguage) {
           navigate('/switch-language')
         }
+
+        navigate('/switch-language')
       } catch (error) {
         setError((error as Error).message || 'Unknown error')
       } finally {
@@ -35,7 +38,7 @@ const MainApp: React.FC = () => {
     }
 
     initApp()
-  }, [setConfig, navigate])
+  }, [])
 
   if (isLoading || !config) {
     return <LoadPage />
@@ -47,6 +50,7 @@ const MainApp: React.FC = () => {
 
   return (
     <Routes>
+      <Route path="/registration" element={<Registration />} />
       <Route path="/switch-language" element={<SwitchLanguage />} />
     </Routes>
   )
